@@ -2,6 +2,22 @@
 
 > Document extraction with per-field calibrated confidence routed at a cost-optimal threshold, so operations knows where to put the human.
 
+## Live deployment
+
+[![CI and deployment](https://github.com/SlateGitOrg/fieldextract/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SlateGitOrg/fieldextract/actions/workflows/ci.yml)
+
+[Open the interactive Field Extract demo](https://slategitorg.github.io/fieldextract/)
+
+The deployed interface uses a deterministic offline scenario to make the repository's tested decision rule visible without external services or private data.
+
+### Desktop
+
+![Field Extract desktop deployment](docs/assets/deployed-desktop.png)
+
+### Mobile
+
+<img src="docs/assets/deployed-mobile.png" alt="Field Extract mobile deployment" width="390">
+
 > **Implementation note.** No OCR engine, vision-language model, Ollama or paid
 > API is used. Extraction runs behind the `ExtractorBackend` interface
 > (`src/extractor.py`), and the shipped backend is a **deterministic, seeded
