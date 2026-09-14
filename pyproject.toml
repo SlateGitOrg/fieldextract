@@ -1,0 +1,14 @@
+[project]
+name = "fieldextract"
+version = "0.1.0"
+description = "Document extraction with per-field calibrated confidence routed at a cost-optimal threshold, so operations knows where to put the human."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
