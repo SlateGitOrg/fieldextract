@@ -1,7 +1,8 @@
-name: ci
+name: CI and Pages
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -11,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages-${{ github.repository }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -19,35 +20,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        if: ${{ hashFiles('package.json') != '' }}
+        with:
+          node-version: 24
       - uses: actions/setup-python@v5
+        if: ${{ hashFiles('pyproject.toml') != '' }}
         with:
           python-version: '3.12'
+      - name: Install Python package
+        if: ${{ hashFiles('pyproject.toml') != '' }}
+        run: pip install -e .
       - name: Run native tests
         run: python -m unittest discover -s tests -v
-
   site-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate deployable site
-        run: python scripts/validate_site.py
-
+      - run: python scripts/validate_site.py
+      - run: node --test site/core.test.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request'
     needs: [test, site-check]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

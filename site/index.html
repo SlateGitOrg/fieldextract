@@ -1,1 +1,42 @@
-<!doctype html><html lang="en" class="evidence-desk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Route documents by calibrated field confidence, not a single model score."><meta name="theme-color" content="#f4f1e8"><title>Field Extract — Live demo</title><link rel="stylesheet" href="./styles.css"></head><body><div class="shell"><nav class="topbar" aria-label="Primary"><a class="brand" href="./"><span class="brand-mark">S</span>Field Extract</a><a class="repo-link" href="https://github.com/SlateGitOrg/fieldextract">View source on GitHub</a></nav><main><header class="hero"><div><p class="kicker">Document review desk</p><h1>Route documents by calibrated field confidence, not a single model score.</h1></div><div class="hero-side"><p>This interactive browser scenario makes the repository's tested decision rule visible. Adjust the operating condition and inspect what changes.</p><div class="status" role="status"><span class="status-dot" aria-hidden="true"></span>Threshold optimized</div></div></header><section class="visual" aria-label="Interactive project view"><div class="evidence" aria-label="Evidence review"><header><span>Evidence item</span><span>Confidence</span><span>Decision</span></header><button class="evidence-row" type="button" data-row="0" aria-pressed="true"><span class="doc-mark">1</span><strong>Invoice total</strong><span class="confidence">97%</span><span class="verdict">Accept</span></button><button class="evidence-row" type="button" data-row="1" aria-pressed="false"><span class="doc-mark">2</span><strong>Supplier ID</strong><span class="confidence">84%</span><span class="verdict">Accept</span></button><button class="evidence-row" type="button" data-row="2" aria-pressed="false"><span class="doc-mark">3</span><strong>Due date</strong><span class="confidence">62%</span><span class="verdict">Review</span></button><div class="evidence-note"><span class="rule"></span><p>Select an item to inspect why the system reached its decision.</p></div></div></section><aside class="panel"><div class="metric"><strong id="primary-metric" aria-live="polite">14</strong><span>documents need review</span></div><div class="control"><label for="scenario-range"><span>Review capacity</span><output id="scenario-output" for="scenario-range">46 docs/h</output></label><input id="scenario-range" type="range" min="10" max="100" value="46" aria-label="Review capacity"></div><div class="facts"><div class="fact"><strong>97.2%</strong><span>field accuracy</span></div><div class="fact"><strong>$0.18</strong><span>cost per document</span></div><div class="fact"><strong>6</strong><span>field types</span></div></div></aside><footer class="demo-note"><p>Representative offline scenario. The repository's native test suite verifies the core behavior; this page visualizes its decision path without external services or private data.</p><a href="https://github.com/SlateGitOrg/fieldextract#readme">Read the engineering case study</a></footer></main></div><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Extract invoice fields, score field confidence, redact account data, and route uncertain fields to review.">
+  <title>Field Extract · Working Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+  <header class="masthead"><a class="brand" href="https://github.com/SlateGitOrg/fieldextract">Field Extract</a><span class="build-state"><i></i> live computation</span></header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">Document extraction router</p>
+      <h1>Run the decision,<br><em>inspect the evidence.</em></h1>
+      <p class="lede">Extract invoice fields, score field confidence, redact account data, and route uncertain fields to review.</p>
+    </section>
+    <section class="workspace" aria-label="Interactive project workspace">
+      <form id="workspace-form" class="control-panel">
+        <div class="panel-heading"><span>01</span><div><p>Inputs</p><h2>Configure the run</h2></div></div>
+        <div class="fields"><label class="field" for="document"><span>Invoice text</span><textarea id="document" name="document" rows="12">INVOICE INV-2048
+Supplier: Northstar Components
+Due date: 2026-10-15
+Total: $12,480.25
+Card: 4111 1111 1111 1111</textarea></label>
+<label class="field" for="supplierConfidence"><span>Supplier confidence</span><input id="supplierConfidence" name="supplierConfidence" type="number" value="0.98" min="0" max="1" step="any" data-suggested-step="0.01"></label>
+<label class="field" for="dateConfidence"><span>Date confidence</span><input id="dateConfidence" name="dateConfidence" type="number" value="0.87" min="0" max="1" step="any" data-suggested-step="0.01"></label>
+<label class="field" for="totalConfidence"><span>Total confidence</span><input id="totalConfidence" name="totalConfidence" type="number" value="0.96" min="0" max="1" step="any" data-suggested-step="0.01"></label>
+<label class="field" for="threshold"><span>Auto-accept threshold</span><input id="threshold" name="threshold" type="number" value="0.9" min="0" max="1" step="any" data-suggested-step="0.01"></label></div>
+        <div class="actions"><button class="run" type="submit">Run analysis <span>→</span></button><button id="reset-button" class="reset" type="button">Reset</button></div>
+      </form>
+      <section id="results" class="result-panel" aria-live="polite" aria-busy="true">
+        <div class="panel-heading"><span>02</span><div><p>Output</p><h2>Decision trace</h2></div></div>
+        <div id="result-content" class="result-content"><div class="loading">Computing initial scenario…</div></div>
+      </section>
+    </section>
+  </main>
+  <footer><p>Built from the tested logic in <a href="https://github.com/SlateGitOrg/fieldextract">SlateGitOrg/fieldextract</a>.</p><p>Interactive capstone · Sneha Chandra</p></footer>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>
