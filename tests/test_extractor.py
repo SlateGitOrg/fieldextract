@@ -67,7 +67,7 @@ class TestErrorCharacteristics(unittest.TestCase):
         """Printed money beats printed identifiers beats free-text prose.
 
         If accuracy were uniform across fields, per-field thresholds would be
-        pointless and the whole differentiator would be decoration.
+        pointless and per-field routing would be decoration.
         """
         order = ["invoice_total", "claimant_name", "policy_number",
                  "incident_date", "damage_description"]

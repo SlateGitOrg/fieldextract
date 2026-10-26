@@ -113,7 +113,7 @@ class TestHeadlineGlobalVersusPerField(unittest.TestCase):
     Baseline A: one global threshold applied to RAW confidence -- both generic
     mistakes at once, and it is the common shipped design.
     Baseline B: one global threshold applied to CALIBRATED probability --
-    isolates the per-field half of the differentiator.
+    isolates the per-field half of the routing argument.
     Policy C : per-field cost-optimal thresholds on calibrated probability.
 
     Both baselines get their threshold tuned on the evaluation set itself to

@@ -89,7 +89,7 @@ def evaluate(name, rows, scores, threshold_for_field, review_cost=REVIEW_COST_US
 
 
 def per_field_thresholds(review_cost=REVIEW_COST_USD) -> dict:
-    """The differentiator, in one line each: threshold = 1 - review/escape."""
+    """Per-field thresholds, in one line each: threshold = 1 - review/escape."""
     return {name: cost_optimal_threshold(spec, review_cost)
             for name, spec in FIELD_BY_NAME.items()}
 
